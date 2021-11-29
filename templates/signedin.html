@@ -1,0 +1,94 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+    .midwives{
+    margin-left: 180px;
+
+    }
+
+    .logo{
+    margin-right: 20px;
+    float: left;
+    }
+
+    .head{
+    margin-left: 35px;
+    display: block;
+    margin: 20px;
+    }
+
+.footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:80px;
+   width:100%;
+   background:navy;
+   align:center;
+}
+ table{
+            border-collapse: collapse;
+            width: 100%;
+            display: table;
+        }
+    th,td{
+        border: 2px solid lime;
+        padding: 10px;
+    height:100%;
+    }
+
+    </style>
+<body style="background:#D3D3D3" ;>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="topmenupart">
+                <nav class="menulist" style="background:navy;height:30px;">
+                    <p class="ptag" style="color:white;">Email:- narmgh@gmail.com</p>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="midwives">
+    <img src="static/ghana.jpeg" alt="no image" class="logo" height="200px" width="200px">
+    <h2 style="color:darkblue;" class="head">NATIONAL ASSOCIATION OF REGISTERED MIDWIVES</h2>
+    <h2 class="head">(GHANA)</h2>
+    <br>
+    <br>
+</div>
+
+<div style="align:center;">
+    <table style="align:center;">
+        {% if count == 1 %}
+        {% for key,value in Userdata.items() %}
+        <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+{% else %}
+<p style="text-align: center;margin-right:500px;font-size:40px; ">Hmmmm..Please Enter right Credentials!</p>
+<a href="/home" style="margin-left:500px;">Click here to go back to homepage.</a>
+{% endif %}
+
+<div class="footer">
+    <p align="center" style="color:white;">National Association Of Registered Midwives | Ghana (NARMGH)</p>
+    <p align="center" style="color:white;"> P O Box MP 2750, mamprobi - Accra Tel: 0302903250 Office location 1st floor
+        H&B properties, Shiashie, East Legon.</p>
+</div>
+
+</body>
+
+</head>
+
+
+</html>

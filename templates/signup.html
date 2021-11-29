@@ -1,0 +1,263 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+
+
+        .ptag {
+    margin-left: 80px;
+    }
+
+    .midwives{
+    margin-left: 180px;
+
+    }
+
+    .logo{
+    margin-right: 20px;
+    float: left;
+    }
+
+    .head{
+    margin-left: 35px;
+    display: block;
+    margin: 20px;
+    }
+
+
+    .signin{
+      position: relative;
+    top: 150px;
+    left:-40px;
+    }
+
+
+
+.login {
+    position: relative;
+    top: 20px;
+    left:250px;
+    width:100px;
+    height:30px;
+
+}
+
+
+
+.footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:80px;
+   width:100%;
+   background:navy;
+   align:center;
+}
+
+
+
+
+   label {
+  display: inline-block;
+  width: 140px;
+  font-size: 20px;font-color:black;
+
+  text-align: right;
+  float:left;
+  }
+
+
+
+.nowrap {
+  white-space: nowrap ;
+   display: contents!important;
+
+}
+
+input.radio { display: inline; }
+input {
+height:40px;
+ width:270px;
+}
+
+button
+{
+height:50px;
+width:200px;
+}
+
+
+
+</style>
+<body style="background:#D3D3D3" ;>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="topmenupart">
+                <nav class="menulist" style="background:navy;height:30px;">
+                    <p class="ptag" style="color:white;">Email:- narmgh@gmail.com</p>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="midwives">
+    <img src="static/ghana.jpeg" alt="no image" class="logo" height="200px" width="200px">
+    <h2 style="color:darkblue;" class="head">NATIONAL ASSOCIATION OF REGISTERED MIDWIVES</h2>
+    <h2 class="head">(GHANA)</h2>
+    <br>
+    <br>
+</div>
+
+
+<div style="width:1000px; height:1200px;width:800px;margin-left:500px; border: 5px solid red;" align="center">
+    <h3>MEMBER REGISTRATION FORM</h3>
+    <div align="center" class="membership">
+        <!--FORM -->
+        <form action="/home" method="POST">
+            <table border="0" align="center">
+                <tbody>
+                <tr>
+                    <td><label>Are you a dues paying member of NARMGH?:</label></td>
+                    <td><input name="paying_member" type="checkbox" style="height:40px;width:20px;" value="Yes"></td>
+                </tr>
+
+                <tr>
+                    <td><label>Surname:<span style="color:red">*</span></label></td>
+                    <td><input name="surname" type="text" required="required"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>First Name:<span style="color:red">*</span> </label></td>
+                    <td><input name="firstname" type="text" required="required"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Middle Name:</label></td>
+                    <td><input name="middlename" type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>DOB(DD/MM/YYYY):<span style="color:red">*</span></label></td>
+                    <td><input name="dob" type="date" required="required"/></td>
+                </tr>
+
+                <tr>
+                    <td><label style="margin-right:120px;">Gender:<span style="color:red">*</span></label></td>
+
+                    <td><label style="margin-left:-100px;">Male</label><input name="gender" value="male" type="radio"
+                                                                              required="required"
+                                                                              style="height:40px;width:20px;margin-right:-200px;">
+                    </td>
+                    <td><label style="margin-left:-280px;">Female</label><input name="gender" value="female"
+                                                                                type="radio"
+                                                                                style="height:40px;width:20px;margin-left:-300px;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label>Contact no:<span style="color:red">*</span></label></td>
+                    <td><input name="contactno" type="text" required="required"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Ghana Card No:<span style="color:red">*</span></label></td>
+                    <td><input name="cardno" required="required"
+                               type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Home Address: <span style="color:red">*</span></label></td>
+                    <td><input required="required"
+                               type="text" name="homeaddress"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Regions :<span style="color:red">*</span></label></td>
+                    <td><select style="height:40px;width:270px;" required="required" name="regions">
+                        <option value>--Select--</option>
+                        <option value="Ashanti Region">Ashanti Region</option>
+                        <option value="Eastern Region">Eastern Region</option>
+                        <option value="Central Region">Central Region</option>
+                        <option value="Greater Accra Region">Greater Accra Region</option>
+                        <option value="Savannah Region">Savannah Region</option>
+                        <option value="North East Region">North East Region</option>
+                        <option value="Bono Region">Bono Region</option>
+                        <option value="Ahafo Region">Ahafo Region</option>
+                        <option value="Bono East Region">Bono East Region</option>
+                        <option value="Oti Region">Oti Region</option>
+                        <option value="Upper West Region">Upper West Region</option>
+                        <option value="Northern Region">Northern Region</option>
+                        <option value="Volta Region">Volta Region</option>
+                        <option value="Western Region">Western Region</option>
+                        <option value="Western North Region">Western North Region</option>
+                    </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label>District :<span style="color:red">*</span></label></td>
+                    <td><input required="required" name="district"
+                               type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Place Of Work/ Facility :<span style="color:red">*</span></label></td>
+                    <td><input required="required" name="placeofwork"
+                               type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Rank :<span style="color:red">*</span></label></td>
+                    <td><input required="required" name="rank"
+                               type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Staff ID :<span style="color:red">*</span></label></td>
+                    <td><input required="required" name="staffid"
+                               type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>PIN :<span style="color:red">*</span></label></td>
+                    <td><input required="required" name="pin"
+                               type="text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Professional Qualification :<span style="color:red">*</span></label></td>
+                    <td>
+                        <select style="height:40px;width:270px;" required="required" name="qualification">
+                            <option value>--Select--</option>
+                            <option value="Degree">Degree</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Certificate">Certificate</option>
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <button name="prime" value="sub">SUBMIT</button>
+        </form>
+    </div>
+</div>
+
+<div class="footer">
+    <p align="center" style="color:white;">National Association Of Registered Midwives | Ghana (NARMGH)</p>
+    <p align="center" style="color:white;"> P O Box MP 2750, mamprobi - Accra Tel: 0302903250 Office location 1st floor
+        H&B properties, Shiashie, East Legon.</p>
+</div>
+
+</body>
+
+</head>
+
+
+</html>
