@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="align:center">Admin Dash</title>
+    <style>
+div.form{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+    </style>
+</head>
+<body style="background-color:#33E8FF;">
+<h2 style="text-align:center">Admin Dashboard</h2>
+
+
+<div class="form">
+    <form action="/admin" method="POST">
+        <label style="font-size: 15px;font-color:black;">Username:</label>
+
+        <input type="text" name="adminid" style="height:40px;font-size: 30px;">
+        <br>
+        <br>
+
+        <label style="font-size: 15px;font-color:black;">Password:</label>
+        <input type="text" name="adminpass" style="height:40px;font-size: 30px;">
+        <br>
+        <br>
+        <button name="prime" value="admin" style="text-align:center;">SIGN IN</button>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -2,9 +2,11 @@ from flask import *
 import random,string,requests
 import pandas as pd
 import os
+from creds import admin
 
 
 app = Flask(__name__)
+us,pw= admin()
 
 username = "annorboadu"
 apiKey = "ad43cb64139370fa55479c9446b08c8b"
@@ -51,13 +53,23 @@ def hello_world():
             #default
             except:
                 payingmember= "No"
+
+            df = pd.read_csv('database.csv')
+            last_row= df.iloc[-1:]
+            #print(last_row)
+            id= int( str(last_row['Userid'].values[0]).split('/')[1] ) + 1
+
+
+
+
+
             password= ''.join(random.sample((string.ascii_lowercase + string.digits), 6))
             user_json= {
             'Paying_member': payingmember,
             'Surname': request.form['surname'],
             'FirstName': request.form['firstname'],
             'Middlename': request.form['middlename'],
-            'Userid': 'NARMGH21/'+ str(1000),
+            'Userid': 'NARMGH21/'+ str(id),
             'Password': password,
             'Dob': request.form['dob'],
             'Gender': request.form['gender'],
@@ -89,6 +101,25 @@ def hello_world():
         return render_template('homepage.html')
 
     return render_template('homepage.html')
+
+@app.route('/admin', methods= ['GET','POST'])
+def view_tables():
+    if request.method == 'POST':
+        #Check for the Admin User and Pass
+        if request.form['adminid'] == us and request.form['adminpass'] == pw:
+            #Enter into Admin Panel
+            return 'Access Granted'
+            df = pd.read_csv('database.csv')
+        else:
+            return "Sorry.Please contact Adminstrator"
+    else:
+        return render_template('admin.html')
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
