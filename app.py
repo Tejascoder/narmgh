@@ -89,7 +89,7 @@ def hello_world():
             df_user.to_csv('database.csv', mode='a', index= False,header=False)
 
             #Send sms to the Number
-            To = request.form['contactno']
+            To = '233' + request.form['contactno']
             mesg= "Dear "+ request.form['firstname'] +'\n'+ 'Your Registration has been received at NARMGH'+'\n'+'secretariat.'+\
                   '\n'+'\n' + 'Login details of NARMGH are'+ '\n' +'\n'+ 'UserID: '+ 'NARMGH21/'+ str(1000) + '\n'+ \
                   'Password: ' + password +'\n' + '\n' +'The information submitted is highly protected'+'\n' + 'Thank you.'
@@ -108,8 +108,9 @@ def view_tables():
         #Check for the Admin User and Pass
         if request.form['adminid'] == us and request.form['adminpass'] == pw:
             #Enter into Admin Panel
-            return 'Access Granted'
             df = pd.read_csv('database.csv')
+            return 'Access Granted'
+             
         else:
             return "Sorry.Please contact Adminstrator"
     else:
