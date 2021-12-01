@@ -3,18 +3,13 @@ import random,string,requests
 import pandas as pd
 import os
 from creds import admin
-
-
 app = Flask(__name__)
 us,pw= admin()
-
 username = "annorboadu"
 apiKey = "ad43cb64139370fa55479c9446b08c8b"
 From = "NARMGH"
 url = "https://sms.dtechghana.com/api/v1/messages"
 headers = {'Content-Type': 'application/json', 'Host': 'sms.dtechghana.com'}
-
-
 
 @app.route('/home', methods=['GET', 'POST'])
 def hello_world():
@@ -23,10 +18,8 @@ def hello_world():
             # Sign-in Functionality
             #print(myquery)
             df= pd.read_csv('database.csv')
-
             #print(df['Userid'])
             #print(request.form['pass'])
-
             if request.form['userid'] in df['Userid'].values:
                 #print('fsakfna')
                 dff= df[df['Userid'] == request.form['userid']]
@@ -34,14 +27,13 @@ def hello_world():
                     count= 1
                 else:
                     count= 0
-                print(type(dff.values))
-                print(dff.values)
-
+                #print(type(dff.values))
+                #print(dff.values)
                 if dff['Password'].values == request.form['pass']:
                     userdata= dict(zip(df.columns.values, dff.values[0]))
                     return render_template('signedin.html',Userdata=userdata,count= count)
-
             return render_template('signedin.html')
+
         elif request.form['prime'] == 'signup':
             # Signup Functionality
             return render_template('signup.html')
@@ -53,16 +45,10 @@ def hello_world():
             #default
             except:
                 payingmember= "No"
-
             df = pd.read_csv('database.csv')
             last_row= df.iloc[-1:]
             #print(last_row)
             id= int( str(last_row['Userid'].values[0]).split('/')[1] ) + 1
-
-
-
-
-
             password= ''.join(random.sample((string.ascii_lowercase + string.digits), 6))
             user_json= {
             'Paying_member': payingmember,
@@ -85,13 +71,13 @@ def hello_world():
             'Qualification': request.form['qualification']
             }
             df_user = pd.DataFrame([user_json])
-            #print(df_user)
+            print(df_user)
             df_user.to_csv('database.csv', mode='a', index= False,header=False)
 
             #Send sms to the Number
-            To = '233' + request.form['contactno']
+            To = '233' + request.form['contactno'][1:]
             mesg= "Dear "+ request.form['firstname'] +'\n'+ 'Your Registration has been received at NARMGH'+'\n'+'secretariat.'+\
-                  '\n'+'\n' + 'Login details of NARMGH are'+ '\n' +'\n'+ 'UserID: '+ 'NARMGH21/'+ str(1000) + '\n'+ \
+                  '\n'+'\n' + 'Login details of NARMGH are'+ '\n' +'\n'+ 'UserID: '+ 'NARMGH21/'+ str(id) + '\n'+ \
                   'Password: ' + password +'\n' + '\n' +'The information submitted is highly protected'+'\n' + 'Thank you.'
 
             payload = json.dumps({'to': To, 'from': From, 'content': mesg})
@@ -104,13 +90,15 @@ def hello_world():
 
 @app.route('/admin', methods= ['GET','POST'])
 def view_tables():
+    df = pd.read_csv('database.csv')
     if request.method == 'POST':
         #Check for the Admin User and Pass
         if request.form['adminid'] == us and request.form['adminpass'] == pw:
             #Enter into Admin Panel
-            df = pd.read_csv('database.csv')
+
+
             return 'Access Granted'
-             
+
         else:
             return "Sorry.Please contact Adminstrator"
     else:
