@@ -79,6 +79,7 @@
             }
         }
 
+
     </style>
 </head>
 
@@ -110,14 +111,14 @@
     <div class="container">
         <div class="row">
             <table class="table table-striped" style="width: 50%;margin: auto auto 100px auto;">
+                {% if count == 1 %}
                 <thead>
                 <tr>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
+                    <th scope="col">Attribute</th>
+                    <th scope="col">Value</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% if count == 1 %}
                 {% for key,value in Userdata.items() %}
                 <tr>
                     <td>{{key}}</td>
