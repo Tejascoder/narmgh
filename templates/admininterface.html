@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="align:center">Admin Dash</title>
+    <style>
+div.form{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+
+
+    </style>
+</head>
+<body style="background-color:#33E8FF;">
+<h2 style="text-align:center">Admin Dashboard</h2>
+{% if cnt >0 %}
+<div>
+    {% for value in all_datas%}
+    <table class="table table-striped" style="width: 50%;margin: auto auto 100px auto;">
+        <thead>
+        <tr>
+            <td>{{col}}</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>{{value}}</td>
+            <!-- <td>{{value}}</td>  -->
+        </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+</div>
+{% endif %}
+</body>
+</html>

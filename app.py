@@ -31,6 +31,7 @@ def hello_world():
                 #print(dff.values)
                 if dff['Password'].values == request.form['pass']:
                     userdata= dict(zip(df.columns.values, dff.values[0]))
+                    del userdata['Password']
                     return render_template('signedin.html',Userdata=userdata,count= count)
             return render_template('signedin.html')
 
@@ -91,13 +92,13 @@ def hello_world():
 @app.route('/admin', methods= ['GET','POST'])
 def view_tables():
     df = pd.read_csv('database.csv')
+    col= df.columns.values
+    all_datas = df.values.tolist()
     if request.method == 'POST':
         #Check for the Admin User and Pass
         if request.form['adminid'] == us and request.form['adminpass'] == pw:
             #Enter into Admin Panel
-
-
-            return 'Access Granted'
+            return render_template('admininterface.html',all_datas=all_datas, cnt=len(df), col= col)
 
         else:
             return "Sorry.Please contact Adminstrator"

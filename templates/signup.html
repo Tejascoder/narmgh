@@ -21,12 +21,12 @@
             color: red;
         }
 
-        .container {
-            padding-left: 275px;
-            padding-right: 200px;
-            margin-top: 10px;
-            margin-left: 50px;
-        }
+<!--        .container {-->
+<!--            padding-left: 275px;-->
+<!--            padding-right: 200px;-->
+<!--            margin-top: 10px;-->
+<!--            margin-left: 50px;-->
+<!--        }-->
 
         .row {
             margin-top: 10px;
@@ -56,6 +56,13 @@
             background: navy;
             text-align: center;
         }
+        @media (min-width:100px) and (max-width:720px) {
+            .container{
+                width: auto;
+            }
+
+        }
+
     </style>
 </head>
 
@@ -121,7 +128,7 @@
                         <label class="col-sm-5">Middle Name</label>
                     </div>
                     <div class="col">
-                        <input class="form-control" id="Name" maxlength="60" name="middlename" type="text">
+                        <input class="form-control" id="Name" maxlength="60" name="middlename" type="text" placeholder="">
                     </div>
                 </div>
                 <div class="row">
