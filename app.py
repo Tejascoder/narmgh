@@ -51,11 +51,15 @@ def hello_world():
             #print(last_row)
             id= int( str(last_row['Userid'].values[0]).split('/')[1] ) + 1
             password= ''.join(random.sample((string.ascii_lowercase + string.digits), 6))
+            if request.form['middlename']:
+                midname= request.form['middlename']
+            else:
+                midname = ' '
             user_json= {
             'Paying_member': payingmember,
             'Surname': request.form['surname'],
             'FirstName': request.form['firstname'],
-            'Middlename': request.form['middlename'],
+            'Middlename': midname,
             'Userid': 'NARMGH21/'+ str(id),
             'Password': password,
             'Dob': request.form['dob'],
@@ -91,23 +95,107 @@ def hello_world():
 
 @app.route('/admin', methods= ['GET','POST'])
 def view_tables():
-    df = pd.read_csv('database.csv')
+    df = pd.read_csv('database.csv')[1:]
+    #print(df)
+    count_regions= df.groupby(['Regions'])['Regions'].count()
+    regions= list(count_regions.index.values)
+
+    count= list(count_regions.values)
+    counts= [int(i) for i in count]
+
+    #Contains regional count
+    #regional_counts= dict(zip(regions, counts))
     col= df.columns.values
     all_datas = df.values.tolist()
     if request.method == 'POST':
         #Check for the Admin User and Pass
         if request.form['adminid'] == us and request.form['adminpass'] == pw:
             #Enter into Admin Panel
-            return render_template('admininterface.html',all_datas=all_datas, cnt=len(df), col= col)
+            userids= df['Userid'].values.tolist()
+            print(userids)
+            return render_template('admininterface.html',all_datas=all_datas, cnt=len(df),regions=regions,counts=counts,col= col,userids=userids)
 
         else:
             return "Sorry.Please contact Adminstrator"
     else:
         return render_template('admin.html')
 
+@app.route('/adminChanges', methods=['GET', 'POST'])
+def admin_resub():
+    if request.method == 'POST':
+        if request.form['prime'] == 'resub':
+            df = pd.read_csv('database.csv')[1:]
+            all_datas = df.values.tolist()
+            #Grouping by regions vs count graph
+            count_regions = df.groupby(['Regions'])['Regions'].count()
+            regions = list(count_regions.index.values)
 
+            count = list(count_regions.values)
+            counts = [int(i) for i in count]
+            #Updating functionality goes here
+            Uid= request.form['userId']
 
+            #Contains Index of UID
+            index= df.index[df['Userid'] == Uid].values[0]
+            selcted_Pass= df.loc[index]['Password']
+            print(selcted_Pass)
 
+            try:
+                payingmember= request.form['paying_member']
+            #default
+            except:
+                payingmember= "No"
+
+            if request.form['middlename']:
+                midname= request.form['middlename']
+            else:
+                midname = ' '
+            user_json = {
+                'Paying_member': payingmember,
+                'Surname': request.form['surname'],
+                'FirstName': request.form['firstname'],
+                'Middlename':midname,
+                'Userid': Uid,
+                'Password': selcted_Pass,
+                'Dob': request.form['dob'],
+                'Gender': request.form['gender'],
+                'Contact_no': request.form['contactno'],
+                'Ghana_Card_no': request.form['cardno'],
+                'Home_address': request.form['homeaddress'],
+                'Regions': request.form['regions'],
+                'District': request.form['district'],
+                'Place_of_work': request.form['placeofwork'],
+                'Rank': request.form['rank'],
+                'Staffid': request.form['staffid'],
+                'Pin': request.form['pin'],
+                'Qualification': request.form['qualification']
+            }
+            print('DONE')
+            df.loc[index, list(df.columns.values)] = list(user_json.values())
+            #df now has updated ignoring the first row
+            df_copy = pd.read_csv('database.csv')
+            #print(df_copy.iloc[0])
+            first_dummy= list(df_copy.iloc[0].values)
+            final= [first_dummy] + df.values.tolist()
+            print(final)
+            df_final = pd.DataFrame(final, columns= list(df.columns.values))
+            print(df_final)
+            df_final.to_csv('database.csv',index= False)
+            df = pd.read_csv('database.csv')[1:]
+            all_datas = df.values.tolist()
+            return render_template('admininterface.html', all_datas=all_datas,regions=regions,counts=counts, cnt=len(df), col=df.columns.values)
+
+    else:
+        df = pd.read_csv('database.csv')[1:]
+        all_datas = df.values.tolist()
+        return render_template('admininterface.html',all_datas=all_datas, cnt=len(df), col= df.columns.values)
+
+@app.route('/printuser', methods=['GET', 'POST'])
+def print_user():
+    df = pd.read_csv('database.csv')
+    col =list(df.columns.values)
+    #View feature having data in array
+    return render_template('printuser.html', col=col)
 
 
 

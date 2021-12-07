@@ -1,47 +1,544 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title style="align:center">Admin Dash</title>
+    <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <title>Admin</title>
+
     <style>
-div.form{
-    display: block;
-    text-align: center;
-}
-form
-{
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-}
+        body {
+            margin: 0px 10px;
+        }
+
+        .main {
+            width: 100%;
+        }
+
+        sup{
+            color: red;
+        }
+
+        .container {
+            margin-top: 25px;
+            width: auto;
+            height: 480px;
+        }
+
+        .form-group {
+            margin: 10px 0px;
+        }
+
+        .row {
+            margin: 0px -15px;
+        }
+
+        label,
+        input,
+        ::placeholder {
+            font-size: small;
+        }
+
+        #login-column {
+            border: 1px solid black;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            height: auto;
+            width: 100%;
+            background: navy;
+            text-align: center;
+        }
+
+        @media (max-width:720px) {
+            #login-row {
+                max-width: 500px;
+                margin: 0px 0px 0px auto;
+            }
+
+            .header {
+                width: auto;
+                margin-left: 20px;
+            }
+        }
+
+        @media (max-width:568px) {
+            #login-row {
+                max-width: 300px;
+                margin: auto;
+            }
+
+            .header {
+                width: auto;
+                margin-left: 20px;
+            }
+        }
+
 
 
 
     </style>
 </head>
-<body style="background-color:#33E8FF;">
-<h2 style="text-align:center">Admin Dashboard</h2>
-{% if cnt >0 %}
-<div>
-    {% for value in all_datas%}
-    <table class="table table-striped" style="width: 50%;margin: auto auto 100px auto;">
-        <thead>
-        <tr>
-            <td>{{col}}</td>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-            <td>{{value}}</td>
-            <!-- <td>{{value}}</td>  -->
-        </tr>
-        </tbody>
-    </table>
-    {% endfor %}
+<body>
+<div class="main">
+    <div class="header">
+        <div class="row" style="background: darkblue;">
+            <div class="col-md-1"></div>
+            <div class="col-md-11 text-white">
+                <a href="#" style="color: white;text-decoration: none;">Email:- narmgh@gmail.com</a>
+            </div>
+        </div>
+        <div class="row" id="head" style="background: lightblue;">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <a href="#"><img style="height:100px;width:120px;"
+                                 src="static/ghana.jpeg" alt="No logo"></a>
+            </div>
+            <div class="col-md-9">
+                <h1 style="width:100%;">National Association Of Registered Midwives</h1>
+                <span>(GHANA)</span>
+            </div>
+        </div>
+    </div>
 </div>
-{% endif %}
+
+<h2 style="background:#02b4fa;width:100%;text-align:center;">ADMIN DASHBOARD</h2>
+<div class="container" style="overflow-x: auto;">
+    <div class="row" style="margin-bottom:15px;">
+        <div class="col-sm-4">
+            <input type="text" id="myInput" onkeyup='tableSearch()' placeholder="Search..... ">
+        </div>
+        <div class="col-sm-8"></div>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped" style="margin: auto auto 100px auto;white-space: nowrap;" id="myTable">
+            <thead style="position: sticky;top: 0; background: black;color: wheat;">
+            <tr>
+                {% for i in col%}
+                <th scope="col">{{i}}</th>
+                {% endfor %}
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for val in all_datas %}
+            <tr>
+                {% for value in val%}
+                <td>{{value}}</td>
+                {% endfor %}
+                <td>
+                    <button id="{{val[4]}}" name="btn" value="edit" onclick="clickbtn('{{val[4]}}')"
+                            data-toggle="modal" data-target="#exampleModal">Edit
+                    </button>
+                    <button id="{{val[4]}}" name="btn" value="edit" onclick="viewbtn('{{val[4]}}')"
+                            data-toggle="modal">VIEW
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container" style="overflow-x: auto;">
+    <div class="row">
+        <p>Regional Graph</p>
+        <div style="height: 350px; width:350px;">
+            <canvas id="bar-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="/adminChanges" id="myForm" method="POST"
+                      style="margin-bottom: 100px;">
+                    <div style="padding-left:100px;padding-right:100px;">
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Userid: </label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id='uid' name="userId" type="text" readonly
+                                       required="required" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Are you a dues paying member of
+                                    NARMGH? <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"
+                                           required="required" name="paying_member"
+                                           id="pYES" value="yes">
+                                    <label class="form-check-label"
+                                    >Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"
+                                           required="required" name="paying_member"
+                                           id="pNO" value="no">
+                                    <label class="form-check-label"
+                                    >No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Surname <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pSurName" maxlength="60"
+                                       name="surname" type="text" required="required" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">First Name<sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pFirstName" maxlength="60"
+                                       name="firstname" type="text" required="required" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Middle Name</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pMiddleName" maxlength="60"
+                                       name="middlename" type="text" placeholder="" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Date of Birth (DD/MM/YYYY)
+                                    <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pDob" maxlength="10"
+                                       name="dob" type="date" required="required" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Gender <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"
+                                           name="gender" required="required" id="pmale"
+                                           value="male">
+                                    <label class="form-check-label"
+                                           for="inlineRadio1">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"
+                                           name="gender" id="pfemale" required="required"
+                                           value="female">
+                                    <label class="form-check-label"
+                                           for="inlineRadio2">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Contact Number
+                                    <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pContactNo" name="contactno" type="tel"
+                                       required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Ghana Card
+                                    No:<sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pcardno" maxlength="15"
+                                       name="cardno" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Home Address
+                                    <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="phomeaddress" maxlength="200"
+                                       name="homeaddress" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Regions <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <select class="form-control"
+                                        id="pRegions" name="regions"
+                                        required="required">
+                                    <option value="">--Select--</option>
+                                    <option value="Ashanti Region">Ashanti Region
+                                    </option>
+                                    <option value="Eastern Region">Eastern Region
+                                    </option>
+                                    <option value="Central Region">Central Region
+                                    </option>
+                                    <option value="Greater Accra Region">Greater Accra
+                                        Region
+                                    </option>
+                                    <option value="Savannah Region">Savannah Region
+                                    </option>
+                                    <option value="North East Region">North East Region
+                                    </option>
+                                    <option value="Bono Region">Bono Region</option>
+                                    <option value="Ahafo Region">Ahafo Region</option>
+                                    <option value="Bono East Region">Bono East Region
+                                    </option>
+                                    <option value="Oti Region">Oti Region</option>
+                                    <option value="Upper West Region">Upper West Region
+                                    </option>
+                                    <option value="Northern Region">Northern Region
+                                    </option>
+                                    <option value="Volta Region">Volta Region</option>
+                                    <option value="Western Region">Western Region
+                                    </option>
+                                    <option value="Western North Region">Western North
+                                        Region
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">District <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pDistrict" maxlength="100"
+                                       name="district" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Place Of Work/ Facility
+                                    <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pPlaceofwork" maxlength="100"
+                                       name="placeofwork" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Rank <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pRank" maxlength="100"
+                                       name="rank" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Staff ID <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pStaffId" maxlength="20"
+                                       name="staffid" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">PIN <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" id="pPin" maxlength="15"
+                                       name="pin" type="text" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-sm-5">Professional Qualification
+                                    <sup>★</sup></label>
+                            </div>
+                            <div class="col">
+                                <select class="form-control"
+                                        id="pQualification"
+                                        name="qualification" required="required">
+                                    <option value="">--Select--</option>
+                                    <option value="Degree">Degree</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Certificate">Certificate</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                                <button type="reset" value="Reset"
+                                        class="btn btn-warning"
+                                        onclick="resetForm()">Reset
+                                </button>
+                                <button name="prime" class="btn btn-info" value="resub">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="viewModal"
+     tabindex="0"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3>hello</h3>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p style="color:white;text-align: center;">National Association Of Registered Midwives | Ghana (NARMGH)
+    </p>
+    <p style="color:white;text-align: center;"> P O Box MP 2750, mamprobi - Accra Tel: 0302903250 Office
+        location
+        1st floor
+        H&B properties, Shiashie, East Legon.</p>
+</div>
+
+<script>
+var counts= {{counts|tojson}};
+var regions= {{regions|tojson}};
+const ctx = document.getElementById('bar-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: regions,
+            datasets: [{
+                label: 'No of registrations',
+                data: counts,
+                borderWidth: 0.4
+            }]
+        },
+        maintainAspectRatio: false,
+        options: {
+            scales: {
+                yAxes: [{barThickness : 10,
+                    ticks: {
+                        beginAtZero:true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+myChart.aspectRatio = 0;
+
+
+</script>
 </body>
+<script>
+    var userids= {{all_datas|tojson}};
+    function clickbtn(uid){
+    //Open Modal
+    for (let i=0; i<userids.length; i++){
+    if(uid == userids[i][4]){
+    //Feature for POP UP.. Use userids[i]
+    if (userids[i][0] == 'yes'){document.getElementById('pYES').value= userids[i][0];}
+    else{document.getElementById('pNO').value= userids[i][0];}
+    if (userids[i][7] == 'male'){document.getElementById('pmale').value= userids[i][7];}
+    else{document.getElementById('pfemale').value= userids[i][7];}
+
+    document.getElementById('pSurName').value = userids[i][1];
+    document.getElementById('pFirstName').value = userids[i][2];
+    document.getElementById('pMiddleName').value = userids[i][3];
+    document.getElementById('pDob').value = userids[i][6];
+    document.getElementById('pContactNo').value = userids[i][8];
+    document.getElementById('pcardno').value = userids[i][9];
+    document.getElementById('phomeaddress').value = userids[i][10];
+    document.getElementById('pRegions').value = userids[i][11];
+    document.getElementById('pDistrict').value = userids[i][12];
+    document.getElementById('pPlaceofwork').value = userids[i][13];
+    document.getElementById('pRank').value = userids[i][14];
+    document.getElementById('pStaffId').value = userids[i][15];
+    document.getElementById('pPin').value = userids[i][16];
+    document.getElementById('pQualification').value = userids[i][17];
+    document.getElementById('uid').value = userids[i][4];
+    }
+    }
+    }
+    function viewbtn(uid){
+    //Open Modal
+    for (let i=0; i<userids.length; i++){
+    if(uid == userids[i][4]){
+    var spcdata= userids[i]
+    localStorage.setItem('usr',JSON.stringify(spcdata));
+    location.replace('printuser');
+    }}}
+//Search feature
+function tableSearch() {
+            let input, filter, table, tr, td, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                td = tr[i];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+
+        }
+
+</script>
 </html>

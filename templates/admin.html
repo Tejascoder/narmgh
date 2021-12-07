@@ -1,42 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title style="align:center">Admin Dash</title>
+    <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <title>Document</title>
     <style>
-div.form{
-    display: block;
-    text-align: center;
-}
-form
-{
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-}
+        body{
+            margin: 0px 10px;
+        }
+        .main{
+            width: 100%;
+        }
+        .container {
+            margin-top: 120px;
+            min-width: 600px;
+            height: 400px;
+        }
 
+        .form-group {
+            margin: 10px 0px;
+        }
+
+        .row {
+            margin: 0px -15px;
+        }
+
+        label,
+        input,
+        ::placeholder {
+            font-size: small;
+        }
+
+        #login-column {
+            border: 1px solid black;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            height: 80px;
+            width: 100%;
+            background: navy;
+            text-align: center;
+        }
+
+        @media (max-width:720px) {
+            #login-row{
+                max-width: 500px;
+                margin: 0px 0px 0px auto;
+            }
+            .header{
+                width: 150%;
+                margin-left: 20px;
+            }
+        }
+        @media (max-width:568px) {
+            #login-row{
+                max-width: 300px;
+                margin: auto;
+            }
+            .header{
+                width: 150%;
+                margin-left: 20px;
+            }
+        }
     </style>
 </head>
-<body style="background-color:#33E8FF;">
-<h2 style="text-align:center">Admin Dashboard</h2>
 
-
-<div class="form">
-    <form action="/admin" method="POST">
-        <label style="font-size: 15px;font-color:black;">Username:</label>
-
-        <input type="text" name="adminid" style="height:40px;font-size: 30px;">
-        <br>
-        <br>
-
-        <label style="font-size: 15px;font-color:black;">Password:</label>
-        <input type="text" name="adminpass" style="height:40px;font-size: 30px;">
-        <br>
-        <br>
-        <button name="prime" value="admin" style="text-align:center;">SIGN IN</button>
-    </form>
-</div>
+<body>
+    <!-- <header>
+        <a href="#"><img style="height:100px;width:120px;" src="static\ghana.jpeg" alt="SSC Logo"></a>
+        <h1 class="text-center">National Association Of Registered Midwives</h1>
+    </header> -->
+    <div class="main">
+        <div class="header">
+            <div class="row" style="background: darkblue;">
+                <div class="col-md-1"></div>
+                <div class="col-md-11 text-white">
+                    <a href="#" style="color: white;text-decoration: none;">Email:- narmgh@gmail.com</a>
+                </div>
+            </div>
+            <div class="row" id="head" style="background: lightblue;">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <a href="#"><img style="height:100px;width:120px;"
+                            src="static\ghana.jpeg" alt="No logo"></a>
+                </div>
+                <div class="col-md-9">
+                    <h1 style="width:100%;">National Association Of Registered Midwives</h1>
+                    <span>(GHANA)</span>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div id="login-row" class="row justify-content-center align-items-center">
+                        <div id="login-column" class="col-md-6">
+                            <h3 class="text-center text-info text-white" style="background: #02b4fa">ADMIN LOGIN</h3>
+                            <div id="login-box" class="col-md-12">
+                                <form action="/admin" class="form" method="POST">
+                                    <div class="form-group">
+                                        <label class="text-info-black-md">User Id</label><br>
+                                        <input type="text" name="adminid" class="form-control"
+                                            placeholder="Please enter username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-info-black-md">Password</label><br>
+                                        <input type="text" name="adminpass"  class="form-control"
+                                            placeholder="Please enter password">
+                                    </div>
+                                    <div class="form-group" style="text-align: center;">
+                                        <!-- <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br> -->
+                                        <button name="prime" class="btn btn-info" value="admin" >Sign in</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p style="color:white;text-align: center;">National Association Of Registered Midwives | Ghana (NARMGH)</p>
+        <p style="color:white;text-align: center;"> P O Box MP 2750, mamprobi - Accra Tel: 0302903250 Office location
+            1st floor
+            H&B properties, Shiashie, East Legon.</p>
+    </div>
 </body>
-</html>
