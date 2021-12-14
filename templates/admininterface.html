@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+`<!DOCTYPE html>
 <html>
 
 <head>
@@ -44,8 +44,8 @@
 
         .container {
             margin-top: 25px;
-            width: auto;
-            height: 480px;
+            width: auto;          
+            
         }
 
         .form-group {
@@ -99,11 +99,7 @@
                 margin-left: 20px;
             }
         }
-
-
-
-
-    </style>
+</style>
 </head>
 <body>
 <div class="main">
@@ -129,7 +125,7 @@
 </div>
 
 <h2 style="background:#02b4fa;width:100%;text-align:center;">ADMIN DASHBOARD</h2>
-<div class="container" style="overflow-x: auto;">
+<div class="container" style="overflow-x: auto; height:480px;">
     <div class="row" style="margin-bottom:15px;">
         <div class="col-sm-4">
             <input type="text" id="myInput" onkeyup='tableSearch()' placeholder="Search..... ">
@@ -160,22 +156,32 @@
                     <button id="{{val[4]}}" name="btn" value="edit" onclick="viewbtn('{{val[4]}}')"
                             data-toggle="modal">VIEW
                     </button>
+                    <button type="button" class="btn btn-danger" name="btn" value="del" data-toggle="modal"
+                            id="{{val[4]}}" onclick="delbtn('{{val[4]}}')"
+                            data-target="#deleteRecord">Delete
+                    </button>
+                    <!-- delete functionality -->
+
                 </td>
             </tr>
+
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-<div class="container" style="overflow-x: auto;">
+
+<div class="container" style="margin-bottom:100px;">
     <div class="row">
         <p>Regional Graph</p>
-        <div style="height: 350px; width:350px;">
+        <div class="col-sm-6">
             <canvas id="bar-chart"></canvas>
+        </div>
+        <div class="col-sm-6">
+            <canvas id="pie-chart" height="100"></canvas>
         </div>
     </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal"
@@ -426,20 +432,6 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="viewModal"
-     tabindex="0"
-     aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h3>hello</h3>
-
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="footer">
     <p style="color:white;text-align: center;">National Association Of Registered Midwives | Ghana (NARMGH)
     </p>
@@ -452,6 +444,27 @@
 <script>
 var counts= {{counts|tojson}};
 var regions= {{regions|tojson}};
+
+var sex= {{sex|tojson}};
+console.log(sex);
+var sex_counts = {{sex_counts|tojson}};
+console.log(sex_counts);
+
+
+//PIE GRAPH
+var pie = document.getElementById("pie-chart").getContext('2d');
+var pieChart = new Chart(pie, {
+  type: 'pie',
+  data: {
+    labels: sex,
+    datasets: [{
+      backgroundColor: ["#2ecc71", "#3498db"],
+      data: sex_counts
+    }]
+  }
+});
+
+//BAR GRAPH
 const ctx = document.getElementById('bar-chart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -460,12 +473,14 @@ const ctx = document.getElementById('bar-chart').getContext('2d');
             datasets: [{
                 label: 'No of registrations',
                 data: counts,
-                borderWidth: 0.4
+                borderWidth: 0.4,
+                backgroundColor: "rgb(63, 80, 191)"
             }]
         },
         maintainAspectRatio: false,
         options: {
             scales: {
+                xAxes: [{barPercentage: 0.3}],
                 yAxes: [{barThickness : 10,
                     ticks: {
                         beginAtZero:true,
@@ -478,10 +493,15 @@ const ctx = document.getElementById('bar-chart').getContext('2d');
 myChart.aspectRatio = 0;
 
 
+
+
+
+
 </script>
 </body>
 <script>
     var userids= {{all_datas|tojson}};
+    //EDIT functionality
     function clickbtn(uid){
     //Open Modal
     for (let i=0; i<userids.length; i++){
@@ -510,6 +530,25 @@ myChart.aspectRatio = 0;
     }
     }
     }
+
+    //DELETE functionality
+    function delbtn(uid){
+    //Open Modal
+   for (let i=0; i<userids.length; i++){
+    if(uid == userids[i][4]){
+    $.ajax({
+             type: "POST",
+             url: "/deleteuser",
+             data: JSON.stringify(uid),
+             contentType: "application/json",
+             dataType: 'json'
+    });
+    alert('You deleted record!');
+    window.location.reload();
+
+    }}}
+
+    //view button feature
     function viewbtn(uid){
     //Open Modal
     for (let i=0; i<userids.length; i++){
@@ -540,5 +579,11 @@ function tableSearch() {
 
         }
 
+
+
+
+
+
+
 </script>
-</html>
+</html>`

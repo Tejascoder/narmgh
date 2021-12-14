@@ -18,6 +18,7 @@ def hello_world():
             # Sign-in Functionality
             #print(myquery)
             df= pd.read_csv('database.csv')
+            df.fillna(' ', inplace=True)
             #print(df['Userid'])
             #print(request.form['pass'])
             if request.form['userid'] in df['Userid'].values:
@@ -47,6 +48,7 @@ def hello_world():
             except:
                 payingmember= "No"
             df = pd.read_csv('database.csv')
+            df.fillna(' ', inplace=True)
             last_row= df.iloc[-1:]
             #print(last_row)
             id= int( str(last_row['Userid'].values[0]).split('/')[1] ) + 1
@@ -96,12 +98,19 @@ def hello_world():
 @app.route('/admin', methods= ['GET','POST'])
 def view_tables():
     df = pd.read_csv('database.csv')[1:]
+    df.fillna(' ', inplace=True)
     #print(df)
     count_regions= df.groupby(['Regions'])['Regions'].count()
     regions= list(count_regions.index.values)
-
     count= list(count_regions.values)
     counts= [int(i) for i in count]
+    #Gender count and percentages
+    df_sex= df.groupby(['Gender'])['Gender'].count()
+    print(df_sex)
+    sex = list(df_sex.index.values)
+    sex_count = list(df_sex.values)
+    sex_counts = [int(i) for i in sex_count]
+
 
     #Contains regional count
     #regional_counts= dict(zip(regions, counts))
@@ -113,7 +122,8 @@ def view_tables():
             #Enter into Admin Panel
             userids= df['Userid'].values.tolist()
             print(userids)
-            return render_template('admininterface.html',all_datas=all_datas, cnt=len(df),regions=regions,counts=counts,col= col,userids=userids)
+            return render_template('admininterface.html',all_datas=all_datas, cnt=len(df),regions=regions,
+                                   sex_counts=sex_counts,sex=sex,counts=counts,col= col,userids=userids)
 
         else:
             return "Sorry.Please contact Adminstrator"
@@ -125,20 +135,14 @@ def admin_resub():
     if request.method == 'POST':
         if request.form['prime'] == 'resub':
             df = pd.read_csv('database.csv')[1:]
+            df.fillna(' ', inplace=True)
             all_datas = df.values.tolist()
-            #Grouping by regions vs count graph
-            count_regions = df.groupby(['Regions'])['Regions'].count()
-            regions = list(count_regions.index.values)
-
-            count = list(count_regions.values)
-            counts = [int(i) for i in count]
             #Updating functionality goes here
             Uid= request.form['userId']
-
             #Contains Index of UID
             index= df.index[df['Userid'] == Uid].values[0]
             selcted_Pass= df.loc[index]['Password']
-            print(selcted_Pass)
+            #print(selcted_Pass)
 
             try:
                 payingmember= request.form['paying_member']
@@ -174,29 +178,100 @@ def admin_resub():
             df.loc[index, list(df.columns.values)] = list(user_json.values())
             #df now has updated ignoring the first row
             df_copy = pd.read_csv('database.csv')
+            df_copy.fillna(' ', inplace=True)
             #print(df_copy.iloc[0])
             first_dummy= list(df_copy.iloc[0].values)
             final= [first_dummy] + df.values.tolist()
-            print(final)
+            #print(final)
             df_final = pd.DataFrame(final, columns= list(df.columns.values))
-            print(df_final)
+            #print(df_final)
             df_final.to_csv('database.csv',index= False)
             df = pd.read_csv('database.csv')[1:]
+            df.fillna(' ', inplace=True)
             all_datas = df.values.tolist()
-            return render_template('admininterface.html', all_datas=all_datas,regions=regions,counts=counts, cnt=len(df), col=df.columns.values)
+            # Grouping by regions vs count graph
+            count_regions = df.groupby(['Regions'])['Regions'].count()
+            regions = list(count_regions.index.values)
+
+            count = list(count_regions.values)
+            counts = [int(i) for i in count]
+
+            # Gender count and percentages
+            df_sex = df.groupby(['Gender'])['Gender'].count()
+            sex = list(df_sex.index.values)
+            sex_count = list(df_sex.values)
+            sex_counts = [int(i) for i in sex_count]
+            return render_template('admininterface.html', all_datas=all_datas,regions=regions,
+                                   sex_counts=sex_counts, sex=sex, counts=counts, cnt=len(df), col=df.columns.values)
 
     else:
         df = pd.read_csv('database.csv')[1:]
+        df.fillna(' ', inplace=True)
         all_datas = df.values.tolist()
-        return render_template('admininterface.html',all_datas=all_datas, cnt=len(df), col= df.columns.values)
+        # Grouping by regions vs count graph
+        count_regions = df.groupby(['Regions'])['Regions'].count()
+        regions = list(count_regions.index.values)
+
+        count = list(count_regions.values)
+        counts = [int(i) for i in count]
+
+        # Gender count and percentages
+        df_sex = df.groupby(['Gender'])['Gender'].count()
+        sex = list(df_sex.index.values)
+        sex_count = list(df_sex.values)
+        sex_counts = [int(i) for i in sex_count]
+
+        return render_template('admininterface.html', all_datas=all_datas, regions=regions,
+                               sex_counts=sex_counts, sex=sex, counts=counts, cnt=len(df), col=df.columns.values)
+
 
 @app.route('/printuser', methods=['GET', 'POST'])
 def print_user():
     df = pd.read_csv('database.csv')
+    df.fillna(' ', inplace=True)
     col =list(df.columns.values)
     #View feature having data in array
     return render_template('printuser.html', col=col)
 
+@app.route('/deleteuser', methods=['POST'])
+def delete_user():
+    if request.method == "POST":
+        del_usr = request.get_json()
+        print(del_usr)
+        df = pd.read_csv('database.csv')[1:]
+        df.fillna(' ', inplace=True)
+        df_copy = pd.read_csv('database.csv')
+        df_copy.fillna(' ', inplace=True)
+        print(df)
+        index= df[df['Userid'] == del_usr].index.values[0]
+        print(index)
+        #deleted permanently
+        df.drop([index],inplace=True)
+        print(df)
+        print('Done')
+        #writing functionality goes here
+        first_dummy = list(df_copy.iloc[0].values)
+        final = [first_dummy] + df.values.tolist()
+        #print(final)
+        df_final = pd.DataFrame(final, columns=list(df.columns.values))
+        #print(df_final)
+        df_final.to_csv('database.csv', index=False)
+
+        df = pd.read_csv('database.csv')[1:]
+        df.fillna(' ', inplace=True)
+        all_datas = df.values.tolist()
+
+        # Grouping by regions vs count graph
+        count_regions = df.groupby(['Regions'])['Regions'].count()
+        regions = list(count_regions.index.values)
+        count = list(count_regions.values)
+        counts = [int(i) for i in count]
+
+        return render_template('admininterface.html', all_datas=all_datas, regions=regions, counts=counts, cnt=len(df),
+                               col=df.columns.values)
+    else:
+        return render_template('admininterface.html', all_datas=all_datas, regions=regions, counts=counts, cnt=len(df),
+                               col=df.columns.values)
 
 
 if __name__ == '__main__':
