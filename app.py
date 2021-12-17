@@ -3,6 +3,8 @@ import random,string,requests
 import pandas as pd
 import os
 from creds import admin
+
+
 app = Flask(__name__)
 us,pw= admin()
 username = "annorboadu"
@@ -17,7 +19,7 @@ def hello_world():
         if request.form['prime'] == 'signin':
             # Sign-in Functionality
             #print(myquery)
-            df= pd.read_csv('database.csv')
+            df= pd.read_csv('database.csv', encoding= 'unicode_escape')
             df.fillna(' ', inplace=True)
             #print(df['Userid'])
             #print(request.form['pass'])
@@ -47,7 +49,7 @@ def hello_world():
             #default
             except:
                 payingmember= "No"
-            df = pd.read_csv('database.csv')
+            df = pd.read_csv('database.csv', encoding= 'unicode_escape')
             df.fillna(' ', inplace=True)
             last_row= df.iloc[-1:]
             #print(last_row)
@@ -97,7 +99,7 @@ def hello_world():
 
 @app.route('/admin', methods= ['GET','POST'])
 def view_tables():
-    df = pd.read_csv('database.csv')[1:]
+    df = pd.read_csv('database.csv', encoding= 'unicode_escape')[1:]
     df.fillna(' ', inplace=True)
     #print(df)
     count_regions= df.groupby(['Regions'])['Regions'].count()
@@ -134,7 +136,7 @@ def view_tables():
 def admin_resub():
     if request.method == 'POST':
         if request.form['prime'] == 'resub':
-            df = pd.read_csv('database.csv')[1:]
+            df = pd.read_csv('database.csv', encoding= 'unicode_escape')[1:]
             df.fillna(' ', inplace=True)
             all_datas = df.values.tolist()
             #Updating functionality goes here
@@ -177,7 +179,7 @@ def admin_resub():
             print('DONE')
             df.loc[index, list(df.columns.values)] = list(user_json.values())
             #df now has updated ignoring the first row
-            df_copy = pd.read_csv('database.csv')
+            df_copy = pd.read_csv('database.csv', encoding= 'unicode_escape')
             df_copy.fillna(' ', inplace=True)
             #print(df_copy.iloc[0])
             first_dummy= list(df_copy.iloc[0].values)
@@ -186,7 +188,7 @@ def admin_resub():
             df_final = pd.DataFrame(final, columns= list(df.columns.values))
             #print(df_final)
             df_final.to_csv('database.csv',index= False)
-            df = pd.read_csv('database.csv')[1:]
+            df = pd.read_csv('database.csv', encoding= 'unicode_escape')[1:]
             df.fillna(' ', inplace=True)
             all_datas = df.values.tolist()
             # Grouping by regions vs count graph
@@ -205,7 +207,7 @@ def admin_resub():
                                    sex_counts=sex_counts, sex=sex, counts=counts, cnt=len(df), col=df.columns.values)
 
     else:
-        df = pd.read_csv('database.csv')[1:]
+        df = pd.read_csv('database.csv', encoding= 'unicode_escape')[1:]
         df.fillna(' ', inplace=True)
         all_datas = df.values.tolist()
         # Grouping by regions vs count graph
@@ -227,7 +229,7 @@ def admin_resub():
 
 @app.route('/printuser', methods=['GET', 'POST'])
 def print_user():
-    df = pd.read_csv('database.csv')
+    df = pd.read_csv('database.csv', encoding= 'unicode_escape')
     df.fillna(' ', inplace=True)
     col =list(df.columns.values)
     #View feature having data in array
@@ -238,9 +240,9 @@ def delete_user():
     if request.method == "POST":
         del_usr = request.get_json()
         print(del_usr)
-        df = pd.read_csv('database.csv')[1:]
+        df = pd.read_csv('database.csv', encoding= 'unicode_escape')[1:]
         df.fillna(' ', inplace=True)
-        df_copy = pd.read_csv('database.csv')
+        df_copy = pd.read_csv('database.csv', encoding= 'unicode_escape')
         df_copy.fillna(' ', inplace=True)
         print(df)
         index= df[df['Userid'] == del_usr].index.values[0]
@@ -257,7 +259,7 @@ def delete_user():
         #print(df_final)
         df_final.to_csv('database.csv', index=False)
 
-        df = pd.read_csv('database.csv')[1:]
+        df = pd.read_csv('database.csv', encoding= 'unicode_escape')[1:]
         df.fillna(' ', inplace=True)
         all_datas = df.values.tolist()
 
@@ -266,7 +268,7 @@ def delete_user():
         regions = list(count_regions.index.values)
         count = list(count_regions.values)
         counts = [int(i) for i in count]
-
+        print('Done')
         return render_template('admininterface.html', all_datas=all_datas, regions=regions, counts=counts, cnt=len(df),
                                col=df.columns.values)
     else:
@@ -274,5 +276,11 @@ def delete_user():
                                col=df.columns.values)
 
 
+@app.route('/getcsv') # this is a job for GET, not POST
+def plot_csv():
+    return send_file('database.csv',
+                     mimetype='text/csv',
+                     attachment_filename='database.csv',
+                     as_attachment=True)
 if __name__ == '__main__':
     app.run()
